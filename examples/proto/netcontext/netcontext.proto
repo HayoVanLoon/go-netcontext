@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+package netcontext;
+
+import "google/api/annotations.proto";
+
+option go_package = "github.com/HayoVanLoon/netcontext/examples/go-genproto/netcontext";
+
+service FooService {
+  rpc Deadline(DeadlineRequest) returns (DeadlineResponse) {
+    option (google.api.http) = {
+      get: "/deadline"
+    };
+  }
+}
+
+message DeadlineRequest {
+  // Number of hops to attempt.
+  int32 todo = 1;
+  // Timeout in seconds.
+  int32 timeout = 2;
+}
+
+message DeadlineResponse {
+  // Number of hops achieved.
+  int32 hops = 1;
+}
