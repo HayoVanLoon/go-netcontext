@@ -6,7 +6,7 @@ import "google/api/annotations.proto";
 
 option go_package = "github.com/HayoVanLoon/netcontext/examples/go-genproto/netcontext";
 
-service FooService {
+service ExampleService {
   rpc Deadline(DeadlineRequest) returns (DeadlineResponse) {
     option (google.api.http) = {
       get: "/deadline"

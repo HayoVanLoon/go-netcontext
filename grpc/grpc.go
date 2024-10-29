@@ -9,28 +9,10 @@ import (
 	"github.com/HayoVanLoon/go-netcontext"
 )
 
-func harvestMetadata(ctx context.Context) context.Context {
-	md, ok := metadata.FromIncomingContext(ctx)
-	if !ok {
-		return ctx
-	}
-	for _, e := range netcontext.Entries() {
-		vs := md.Get(metadataKey(e))
-		if len(vs) == 0 {
-			vs = md.Get(metadataKey(e))
-		}
-		if len(vs) > 0 {
-			var a any
-			if err := e.Unmarshal(vs[0], &a); err != nil {
-				netcontext.Log("error parsing %q: %s", e.StringKey(), err.Error())
-				continue
-			}
-			ctx = context.WithValue(ctx, e.CtxKey(), a)
-		}
-	}
-	return ctx
-}
-
+// CopyDeadline searches for the deadline in the metadata and returns an
+// updated context with a cancellation function. If the headers do not include
+// the deadline value, the context is returned unchanged and the cancellation
+// function will be nil.
 func CopyDeadline(ctx context.Context) (context.Context, context.CancelFunc) {
 	e, ok := netcontext.Deadline()
 	if !ok {

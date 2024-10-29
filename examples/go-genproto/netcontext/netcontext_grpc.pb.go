@@ -19,101 +19,101 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	FooService_Deadline_FullMethodName = "/netcontext.FooService/Deadline"
+	ExampleService_Deadline_FullMethodName = "/netcontext.ExampleService/Deadline"
 )
 
-// FooServiceClient is the client API for FooService service.
+// ExampleServiceClient is the client API for ExampleService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type FooServiceClient interface {
+type ExampleServiceClient interface {
 	Deadline(ctx context.Context, in *DeadlineRequest, opts ...grpc.CallOption) (*DeadlineResponse, error)
 }
 
-type fooServiceClient struct {
+type exampleServiceClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewFooServiceClient(cc grpc.ClientConnInterface) FooServiceClient {
-	return &fooServiceClient{cc}
+func NewExampleServiceClient(cc grpc.ClientConnInterface) ExampleServiceClient {
+	return &exampleServiceClient{cc}
 }
 
-func (c *fooServiceClient) Deadline(ctx context.Context, in *DeadlineRequest, opts ...grpc.CallOption) (*DeadlineResponse, error) {
+func (c *exampleServiceClient) Deadline(ctx context.Context, in *DeadlineRequest, opts ...grpc.CallOption) (*DeadlineResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(DeadlineResponse)
-	err := c.cc.Invoke(ctx, FooService_Deadline_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, ExampleService_Deadline_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// FooServiceServer is the server API for FooService service.
-// All implementations must embed UnimplementedFooServiceServer
+// ExampleServiceServer is the server API for ExampleService service.
+// All implementations must embed UnimplementedExampleServiceServer
 // for forward compatibility.
-type FooServiceServer interface {
+type ExampleServiceServer interface {
 	Deadline(context.Context, *DeadlineRequest) (*DeadlineResponse, error)
-	mustEmbedUnimplementedFooServiceServer()
+	mustEmbedUnimplementedExampleServiceServer()
 }
 
-// UnimplementedFooServiceServer must be embedded to have
+// UnimplementedExampleServiceServer must be embedded to have
 // forward compatible implementations.
 //
 // NOTE: this should be embedded by value instead of pointer to avoid a nil
 // pointer dereference when methods are called.
-type UnimplementedFooServiceServer struct{}
+type UnimplementedExampleServiceServer struct{}
 
-func (UnimplementedFooServiceServer) Deadline(context.Context, *DeadlineRequest) (*DeadlineResponse, error) {
+func (UnimplementedExampleServiceServer) Deadline(context.Context, *DeadlineRequest) (*DeadlineResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Deadline not implemented")
 }
-func (UnimplementedFooServiceServer) mustEmbedUnimplementedFooServiceServer() {}
-func (UnimplementedFooServiceServer) testEmbeddedByValue()                    {}
+func (UnimplementedExampleServiceServer) mustEmbedUnimplementedExampleServiceServer() {}
+func (UnimplementedExampleServiceServer) testEmbeddedByValue()                        {}
 
-// UnsafeFooServiceServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to FooServiceServer will
+// UnsafeExampleServiceServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to ExampleServiceServer will
 // result in compilation errors.
-type UnsafeFooServiceServer interface {
-	mustEmbedUnimplementedFooServiceServer()
+type UnsafeExampleServiceServer interface {
+	mustEmbedUnimplementedExampleServiceServer()
 }
 
-func RegisterFooServiceServer(s grpc.ServiceRegistrar, srv FooServiceServer) {
-	// If the following call pancis, it indicates UnimplementedFooServiceServer was
+func RegisterExampleServiceServer(s grpc.ServiceRegistrar, srv ExampleServiceServer) {
+	// If the following call pancis, it indicates UnimplementedExampleServiceServer was
 	// embedded by pointer and is nil.  This will cause panics if an
 	// unimplemented method is ever invoked, so we test this at initialization
 	// time to prevent it from happening at runtime later due to I/O.
 	if t, ok := srv.(interface{ testEmbeddedByValue() }); ok {
 		t.testEmbeddedByValue()
 	}
-	s.RegisterService(&FooService_ServiceDesc, srv)
+	s.RegisterService(&ExampleService_ServiceDesc, srv)
 }
 
-func _FooService_Deadline_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _ExampleService_Deadline_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(DeadlineRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(FooServiceServer).Deadline(ctx, in)
+		return srv.(ExampleServiceServer).Deadline(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: FooService_Deadline_FullMethodName,
+		FullMethod: ExampleService_Deadline_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(FooServiceServer).Deadline(ctx, req.(*DeadlineRequest))
+		return srv.(ExampleServiceServer).Deadline(ctx, req.(*DeadlineRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// FooService_ServiceDesc is the grpc.ServiceDesc for FooService service.
+// ExampleService_ServiceDesc is the grpc.ServiceDesc for ExampleService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var FooService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "netcontext.FooService",
-	HandlerType: (*FooServiceServer)(nil),
+var ExampleService_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "netcontext.ExampleService",
+	HandlerType: (*ExampleServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
 			MethodName: "Deadline",
-			Handler:    _FooService_Deadline_Handler,
+			Handler:    _ExampleService_Deadline_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

@@ -3,10 +3,11 @@ package shared
 import (
 	"context"
 	"fmt"
-	pb "github.com/HayoVanLoon/go-netcontext/examples/go-genproto/netcontext"
 	"log"
 	"strings"
 	"time"
+
+	pb "github.com/HayoVanLoon/go-netcontext/examples/go-genproto/netcontext"
 )
 
 func PrintStart[Int int | int32](todo, timeout Int) {

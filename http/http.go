@@ -9,7 +9,8 @@ import (
 )
 
 // Extract extracts the values from the headers (or trailers) and returns a new
-// context with the values found.
+// context with the values found. This method will never set a deadline on the
+// context.
 func Extract(ctx context.Context, h http.Header) context.Context {
 	for _, e := range netcontext.Entries() {
 		v := h.Get(headerKey(e))
@@ -26,6 +27,18 @@ func Extract(ctx context.Context, h http.Header) context.Context {
 	return ctx
 }
 
+// ExtractWithDeadline works as Extract, but will set a deadline if one is
+// found in the headers. In that case (only), the cancellation function will be
+// nil.
+func ExtractWithDeadline(ctx context.Context, h http.Header) (context.Context, context.CancelFunc) {
+	ctx = Extract(ctx, h)
+	return CopyDeadline(ctx, h)
+}
+
+// CopyDeadline searches for the deadline in the headers and returns an updated
+// context with a cancellation function. If the headers do not include the
+// deadline value, the context is returned unchanged and the cancellation
+// function will be nil.
 func CopyDeadline(ctx context.Context, h http.Header) (context.Context, context.CancelFunc) {
 	e, ok := netcontext.Deadline()
 	if !ok {

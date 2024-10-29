@@ -3,11 +3,12 @@ package shared
 import (
 	"context"
 	"errors"
-	"google.golang.org/grpc/codes"
-	"google.golang.org/grpc/status"
 	"log"
 	"math/rand"
 	"time"
+
+	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/status"
 )
 
 func RandomTimer() *time.Timer {
