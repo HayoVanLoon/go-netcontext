@@ -2,9 +2,11 @@ package grpc
 
 import (
 	"context"
-	"github.com/HayoVanLoon/go-netcontext"
+
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/metadata"
+
+	"github.com/HayoVanLoon/go-netcontext"
 )
 
 // UnaryServerIntercept extracts configured values from the incoming metadata
