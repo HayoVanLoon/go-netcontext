@@ -74,7 +74,7 @@ func (ex *ExampleService) Deadline(ctx context.Context, req *pb.DeadlineRequest)
 
 func main() {
 	// Use the interceptor for incoming requests.
-	srv := grpc.NewServer(grpc.UnaryInterceptor(ncgrpc.UnaryServerIntercept))
+	srv := grpc.NewServer(grpc.UnaryInterceptor(ncgrpc.UnaryServerInterceptor))
 	// Wrap the default http.Client for outgoing requests.
 	httpClient := nchttp.WrapClient(http.DefaultClient)
 	client := shared.NewExampleHTTPClient(httpClient)

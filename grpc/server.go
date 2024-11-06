@@ -9,10 +9,10 @@ import (
 	"github.com/HayoVanLoon/go-netcontext"
 )
 
-// UnaryServerIntercept extracts configured values from the incoming metadata
+// UnaryServerInterceptor extracts configured values from the incoming metadata
 // and stores them in the context. Sets a deadline (and handles its
 // cancellation) when one is found. Does not process outgoing metadata.
-func UnaryServerIntercept(ctx context.Context, r any, _ *grpc.UnaryServerInfo, handler grpc.UnaryHandler) (any, error) {
+func UnaryServerInterceptor(ctx context.Context, r any, _ *grpc.UnaryServerInfo, handler grpc.UnaryHandler) (any, error) {
 	ctx = ExtractMetadata(ctx)
 	ctx, cancel := CopyDeadline(ctx)
 	if cancel != nil {
